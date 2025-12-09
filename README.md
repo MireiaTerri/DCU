@@ -2,6 +2,8 @@
 
 Este repositorio contiene el Documento de Estilo Digital para el Diario Digital Inteligente.
 
+![Digital Style Document](https://github.com/user-attachments/assets/953a5ffb-9036-438a-a47a-47d685937fa3)
+
 ## 🚀 Despliegue en GitHub Pages
 
 Para publicar este sitio en GitHub Pages, sigue estos pasos:
