@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento de Estilo Digital</title>
+    <style>
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f7f9fc;
+            color: #1a1a2e;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        /* --- VARIABLES (TOKENS) --- */
+        :root {
+            --primary-blue: #667eea;
+            --primary-violet: #764ba2;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-dark: #1a1a2e;
+            --text-medium: #6c757d;
+            --bg-screen: #f8f9fa;
+            --ui-light: #e9ecef;
+            --alert-red: #dc3545;
+            --card-radius: 20px;
+            --shadow-soft: 0 4px 15px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        h1 { font-size: 36px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px; margin-bottom: 10px; }
+        h2 { font-size: 24px; font-weight: 700; color: var(--text-dark); margin-bottom: 30px; display: flex; align-items: center; }
+        h2::before { content: ''; display: block; width: 6px; height: 24px; background: var(--primary-gradient); margin-right: 15px; border-radius: 4px; }
+        h3 { font-size: 18px; font-weight: 600; color: var(--primary-blue); margin-bottom: 15px; }
+        p { margin-bottom: 15px; color: var(--text-medium); font-size: 16px; }
+
+        /* --- COLOR PALETTE GRID --- */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .swatch {
+            height: 140px;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .swatch:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .swatch-label { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .swatch-hex { font-family: monospace; font-size: 12px; opacity: 0.8; }
+        .swatch-meta { font-size: 11px; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; }
+
+        /* Colors Definitions */
+        .bg-gradient { background: var(--primary-gradient); color: white; grid-column: span 2; }
+        .bg-primary { background: var(--primary-blue); color: white; }
+        .bg-dark { background: var(--text-dark); color: white; }
+        .bg-medium { background: var(--text-medium); color: white; }
+        .bg-white { background: white; color: var(--text-dark); border: 1px solid #eee; }
+        .bg-screen { background: var(--bg-screen); color: var(--text-dark); }
+        .bg-ui { background: var(--ui-light); color: var(--text-dark); }
+        .bg-alert { background: var(--alert-red); color: white; }
+
+        /* --- TYPOGRAPHY --- */
+        .type-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #eee;
+        }
+        .type-label { width: 150px; font-size: 12px; color: var(--text-medium); font-weight: 600; text-transform: uppercase; }
+        .type-preview { flex: 1; }
+
+        /* --- COMPONENTS PREVIEW --- */
+        .component-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 768px) { .component-grid { grid-template-columns: 1fr; } .bg-gradient { grid-column: span 1; } }
+
+        .token-card {
+            background: var(--bg-screen);
+            padding: 20px;
+            border-radius: var(--card-radius);
+            text-align: center;
+        }
+        .token-value { font-family: monospace; background: rgba(0,0,0,0.05); padding: 5px 10px; border-radius: 6px; color: var(--text-dark); font-size: 14px; }
+
+        /* Replicated App Components */
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: 0.2s;
+            cursor: default;
+        }
+        .app-card:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+        
+        .task-row {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 10px;
+        }
+        .checkbox {
+            width: 22px; height: 22px; 
+            border: 2px solid var(--primary-blue); 
+            border-radius: 6px; 
+            margin-right: 15px;
+        }
+        .checkbox.checked {
+            background: var(--primary-blue);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 14px;
+        }
+        .checkbox.checked::after { content: '✓'; }
+
+        /* --- PRINCIPLES BOX --- */
+        .principles {
+            background: var(--text-dark);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+        }
+        .principles h2 { color: white; }
+        .principles p { color: rgba(255,255,255,0.7); }
+        .principles li { margin-bottom: 10px; color: rgba(255,255,255,0.9); margin-left: 20px; }
+        .principles strong { color: var(--primary-blue); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <h1>Documento de Estilo Digital</h1>
+            <p>Guía de sistema visual para el Diario Digital Inteligente</p>
+        </header>
+
+        <!-- 1. COLOR PALETTE -->
+        <section class="section">
+            <h2>1. Paleta Cromática</h2>
+            <p>El sistema utiliza un gradiente frío para acciones principales y una escala de grises neutra para la estructura.</p>
+            
+            <div class="color-grid">
+                <div class="swatch bg-gradient">
+                    <div class="swatch-label">Primary Gradient</div>
+                    <div class="swatch-hex">#667EEA → #764BA2</div>
+                    <div class="swatch-meta">Acciones Principales / Foco</div>
+                </div>
+                <div class="swatch bg-primary">
+                    <div class="swatch-label">Primary Blue</div>
+                    <div class="swatch-hex">#667EEA</div>
+                    <div class="swatch-meta">Interacción / Activo</div>
+                </div>
+                <div class="swatch bg-alert">
+                    <div class="swatch-label">Alert Red</div>
+                    <div class="swatch-hex">#DC3545</div>
+                    <div class="swatch-meta">Errores / Stop</div>
+                </div>
+                <div class="swatch bg-dark">
+                    <div class="swatch-label">Text Dark</div>
+                    <div class="swatch-hex">#1A1A2E</div>
+                    <div class="swatch-meta">Títulos</div>
+                </div>
+                <div class="swatch bg-medium">
+                    <div class="swatch-label">Text Medium</div>
+                    <div class="swatch-hex">#6C757D</div>
+                    <div class="swatch-meta">Subtítulos</div>
+                </div>
+                <div class="swatch bg-white">
+                    <div class="swatch-label">Card White</div>
+                    <div class="swatch-hex">#FFFFFF</div>
+                    <div class="swatch-meta">Contenedores</div>
+                </div>
+                <div class="swatch bg-screen">
+                    <div class="swatch-label">Screen BG</div>
+                    <div class="swatch-hex">#F8F9FA</div>
+                    <div class="swatch-meta">Fondo General</div>
+                </div>
+                <div class="swatch bg-ui">
+                    <div class="swatch-label">UI Light</div>
+                    <div class="swatch-hex">#E9ECEF</div>
+                    <div class="swatch-meta">Bordes / Inactivos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TYPOGRAPHY -->
+        <section class="section">
+            <h2>2. Jerarquía Tipográfica</h2>
+            <p>Fuente del sistema (System Stack) para máxima integración y legibilidad.</p>
+            
+            <div class="type-row">
+                <div class="type-label">H1 Header</div>
+                <div class="type-preview" style="font-size: 28px; font-weight: 700; color: var(--text-dark);">
+                    Buenos días
+                </div>
+                <div class="type-meta">28px / Bold</div>
+            </div>
+            
+            <div class="type-row">
+                <div class="type-label">H2 Subheader</div>
+                <div class="type-preview" style="font-size: 20px; font-weight: 600; color: var(--text-dark);">
+                    Siguientes pasos
+                </div>
+                <div class="type-meta">20px / Semi-Bold</div>
+            </div>
+
+            <div class="type-row">
+                <div class="type-label">Body Text</div>
+                <div class="type-preview" style="font-size: 16px; font-weight: 500; color: var(--text-dark);">
+                    Revisar apuntes de clase
+                </div>
+                <div class="type-meta">16px / Medium</div>
+            </div>
+
+            <div class="type-row" style="border:none;">
+                <div class="type-label">Metadata</div>
+                <div class="type-preview" style="font-size: 14px; font-weight: 400; color: var(--text-medium);">
+                    miércoles, 3 de diciembre de 2025
+                </div>
+                <div class="type-meta">14px / Regular</div>
+            </div>
+        </section>
+
+        <!-- 3. COMPONENTS -->
+        <section class="section">
+            <h2>3. Componentes y Espaciado</h2>
+            
+            <div class="component-grid">
+                <!-- Tokens -->
+                <div>
+                    <h3>Reglas de Diseño (Tokens)</h3>
+                    <ul style="list-style: none; color: var(--text-medium);">
+                        <li style="margin-bottom: 15px;">
+                            <strong>Border Radius:</strong> <span class="token-value">20px</span>
+                            <div style="margin-top:5px; font-size:13px;">Usado en todas las tarjetas para una sensación amigable.</div>
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            <strong>Shadow Soft:</strong> <span class="token-value">0 4px 15px rgba(0,0,0,0.05)</span>
+                            <div style="margin-top:5px; font-size:13px;">Elevación sutil para separar el contenido del fondo.</div>
+                        </li>
+                        <li>
+                            <strong>Spacing:</strong> <span class="token-value">20px - 25px</span>
+                            <div style="margin-top:5px; font-size:13px;">Márgenes internos generosos.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Live Examples -->
+                <div>
+                    <h3>Ejemplos de UI</h3>
+                    
+                    <!-- Card Example -->
+                    <div class="app-card" style="margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <span style="font-size: 24px;">🎯</span>
+                        <span style="font-weight: 600; color: var(--text-dark);">Mis Metas</span>
+                    </div>
+
+                    <!-- Task Example -->
+                    <div class="task-row">
+                        <div class="checkbox"></div>
+                        <div>
+                            <div style="font-weight: 500; color: var(--text-dark);">Tarea Pendiente</div>
+                            <div style="font-size: 12px; color: var(--primary-blue); font-weight: 700;">Hoy</div>
+                        </div>
+                    </div>
+
+                    <div class="task-row" style="opacity: 0.6;">
+                        <div class="checkbox checked"></div>
+                        <div>
+                            <div style="font-weight: 500; color: var(--text-dark); text-decoration: line-through;">Tarea Completada</div>
+                            <div style="font-size: 12px; color: var(--text-medium);">Ayer</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. COHERENCIA -->
+        <div class="principles">
+            <h2>4. Coherencia del Producto</h2>
+            <p>La consistencia visual genera confianza y reduce la carga cognitiva.</p>
+            <ul>
+                <li><strong>Claridad de Acción:</strong> El color violeta/azul se reserva estrictamente para elementos interactivos o de progreso positivo.</li>
+                <li><strong>Ritmo Visual:</strong> El uso repetitivo de bordes redondeados (20px) y sombras suaves crea un lenguaje visual unificado "soft-tech".</li>
+                <li><strong>Jerarquía:</strong> El contraste entre el texto oscuro (#1A1A2E) y los metadatos grises (#6C757D) guía el ojo del usuario instantáneamente a lo importante.</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
